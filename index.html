@@ -1,0 +1,3081 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÉDITION — A World of Refined Taste</title>
+<meta name="description" content="ÉDITION is a premium digital magazine covering culture, fashion, lifestyle, travel, and technology with a refined editorial voice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   CSS CUSTOM PROPERTIES
+   ============================================ */
+:root {
+  --bg: #F8F5F0;
+  --bg-card: #FFFFFF;
+  --bg-secondary: #F0EDE8;
+  --text: #1A1A1A;
+  --text-muted: #6B6B6B;
+  --text-light: #9A9A9A;
+  --accent: #C6A76A;
+  --accent-dark: #A8893A;
+  --border: rgba(26,26,26,0.1);
+  --border-strong: rgba(26,26,26,0.2);
+  --nav-bg: rgba(248,245,240,0.85);
+  --shadow: 0 4px 30px rgba(0,0,0,0.08);
+  --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+  --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', sans-serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
+}
+
+[data-theme="dark"] {
+  --bg: #0D0D0D;
+  --bg-card: #1A1A1A;
+  --bg-secondary: #161616;
+  --text: #FFFFFF;
+  --text-muted: #AAAAAA;
+  --text-light: #666666;
+  --accent: #D4AF37;
+  --accent-dark: #B8941E;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --nav-bg: rgba(13,13,13,0.9);
+  --shadow: 0 4px 30px rgba(0,0,0,0.4);
+  --shadow-hover: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  transition: background 0.4s var(--transition), color 0.4s var(--transition);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.8s var(--transition), visibility 0.8s;
+}
+
+#loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-logo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--text);
+  margin-bottom: 2rem;
+  animation: loaderFade 1.2s ease infinite alternate;
+}
+
+.loader-bar {
+  width: 120px;
+  height: 1px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: var(--accent);
+  animation: loaderSlide 1.2s ease infinite;
+}
+
+@keyframes loaderFade { from { opacity: 0.3; } to { opacity: 1; } }
+@keyframes loaderSlide { to { left: 100%; } }
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.4s var(--transition);
+}
+
+nav.scrolled {
+  padding: 0;
+  box-shadow: var(--shadow);
+}
+
+.nav-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: height 0.4s var(--transition);
+}
+
+nav.scrolled .nav-inner { height: 58px; }
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--text);
+  position: relative;
+}
+
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.4rem 0.75rem;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 50%; right: 50%;
+  height: 1px;
+  background: var(--accent);
+  transition: left 0.3s var(--transition), right 0.3s var(--transition);
+}
+
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { left: 0.75rem; right: 0.75rem; }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: all 0.3s;
+  font-size: 0.85rem;
+}
+
+.nav-icon-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  transform: scale(1.05);
+}
+
+.theme-toggle { position: relative; }
+
+.theme-icon { transition: all 0.3s var(--transition); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: var(--text);
+  transition: all 0.3s;
+}
+
+/* Mobile nav */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: color 0.3s;
+}
+
+.mobile-nav.open a {
+  animation: mobileNavIn 0.5s var(--transition) forwards;
+}
+
+.mobile-nav a:hover { color: var(--accent); }
+
+.mobile-close {
+  position: absolute;
+  top: 1.5rem; right: 2rem;
+  font-size: 1.5rem;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes mobileNavIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   SEARCH OVERLAY
+   ============================================ */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--transition);
+}
+
+.search-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.search-inner {
+  width: min(700px, 90vw);
+  text-align: center;
+}
+
+.search-label {
+  font-family: var(--font-accent);
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2rem;
+}
+
+.search-input-wrap {
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+  caret-color: var(--accent);
+}
+
+.search-input::placeholder { color: rgba(255,255,255,0.25); }
+
+.search-close {
+  position: absolute;
+  top: 1.5rem; right: 0;
+  color: rgba(255,255,255,0.5);
+  background: none; border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.search-close:hover { color: white; }
+
+.search-hint {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 1001;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=80');
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  animation: heroZoom 20s ease-in-out infinite alternate;
+  transition: background-image 0.8s;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.05); }
+  to { transform: scale(1.12); }
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.92) 0%,
+    rgba(0,0,0,0.5) 40%,
+    rgba(0,0,0,0.1) 70%,
+    transparent 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem 6rem;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.5s var(--transition) forwards;
+}
+
+.hero-category {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.3rem 0.8rem;
+}
+
+.hero-date {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  color: white;
+  max-width: 780px;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.7s var(--transition) forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-subtitle {
+  font-family: var(--font-accent);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeUp 1s 0.9s var(--transition) forwards;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s 1.1s var(--transition) forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 2.2rem;
+  background: var(--accent);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--transition);
+}
+
+.btn-primary:hover::before { transform: scaleX(1); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(198,167,106,0.4); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 2px;
+  transition: all 0.3s;
+}
+
+.btn-ghost:hover { color: white; border-color: white; }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 1s 1.5s forwards;
+}
+
+.scroll-text {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  writing-mode: vertical-rl;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  50.01% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* Hero carousel dots */
+.hero-dots {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 3rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 1s 1.5s forwards;
+}
+
+.hero-dot {
+  width: 24px;
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.hero-dot.active {
+  width: 40px;
+  background: var(--accent);
+}
+
+/* ============================================
+   SECTION COMMON
+   ============================================ */
+section { padding: 6rem 0; }
+
+.section-header {
+  max-width: 1440px;
+  margin: 0 auto 3.5rem;
+  padding: 0 3rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.section-label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.section-title em { font-style: italic; color: var(--accent); }
+
+.section-link {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.section-link:hover { color: var(--text); border-color: var(--accent); }
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* ============================================
+   TICKER / MARQUEE
+   ============================================ */
+.ticker {
+  background: var(--accent);
+  padding: 0.6rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-inner {
+  display: inline-flex;
+  animation: tickerScroll 30s linear infinite;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: white;
+  padding: 0 2.5rem;
+}
+
+.ticker-item::after {
+  content: '◆';
+  font-size: 0.4rem;
+  opacity: 0.7;
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================
+   FEATURED STORIES
+   ============================================ */
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.5px;
+  background: var(--border);
+}
+
+.story-card {
+  background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.story-card:hover .card-img-wrap img {
+  transform: scale(1.06);
+}
+
+.story-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--transition);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.story-card.large {
+  grid-row: 1 / 3;
+}
+
+.story-card.large .card-img-wrap {
+  height: 100%;
+  min-height: 580px;
+}
+
+.story-card.large .card-body {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 2.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  color: white;
+}
+
+.story-card.large .card-body .card-title {
+  color: white;
+}
+
+.story-card.large .card-body .card-excerpt { color: rgba(255,255,255,0.7); }
+
+.story-card.medium .card-img-wrap { height: 220px; }
+.story-card.small .card-img-wrap { height: 180px; }
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-category {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  transition: color 0.3s;
+}
+
+.story-card:hover .card-title { color: var(--accent); }
+
+.card-excerpt {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+}
+
+.card-meta-dot { opacity: 0.4; }
+
+.card-author-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ============================================
+   LATEST ARTICLES
+   ============================================ */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2.5rem;
+}
+
+.article-card {
+  cursor: pointer;
+  group: true;
+}
+
+.article-card-img {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  aspect-ratio: 4/3;
+}
+
+.article-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--transition);
+}
+
+.article-card:hover .article-card-img img { transform: scale(1.05); }
+
+.article-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  mix-blend-mode: multiply;
+}
+
+.article-card:hover .article-card-img-overlay { opacity: 0.3; }
+
+.article-bookmark {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.article-card:hover .article-bookmark { opacity: 1; }
+.article-bookmark:hover { background: var(--accent); color: white; }
+.article-bookmark.bookmarked { opacity: 1; background: var(--accent); color: white; }
+
+.article-category {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.article-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  transition: color 0.3s;
+}
+
+.article-card:hover .article-title { color: var(--accent); }
+
+.article-excerpt {
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.article-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+}
+
+.article-author {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.author-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-name { color: var(--text-muted); font-weight: 500; }
+
+/* ============================================
+   TRENDING
+   ============================================ */
+.trending-section {
+  background: var(--bg-secondary);
+  padding: 5rem 0;
+}
+
+.trending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.trending-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.trending-item::before {
+  content: '';
+  position: absolute;
+  left: -3rem;
+  right: -3rem;
+  top: 0; bottom: 0;
+  background: var(--bg-card);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 0;
+}
+
+.trending-item:hover::before { opacity: 1; }
+.trending-item > * { position: relative; z-index: 1; }
+
+.trending-num {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--border-strong);
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.trending-item:hover .trending-num { color: var(--accent); }
+
+.trending-content {}
+
+.trending-cat {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.trending-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+.trending-item:hover .trending-title { color: var(--accent); }
+
+.trending-stats {
+  text-align: right;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+}
+
+.trending-reads {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--text-muted);
+  display: block;
+}
+
+/* ============================================
+   FEATURED QUOTE
+   ============================================ */
+.quote-section {
+  padding: 8rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-section::before {
+  content: '"';
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 25rem;
+  color: var(--accent);
+  opacity: 0.05;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--text);
+  max-width: 900px;
+  margin: 0 auto 2rem;
+}
+
+.quote-author {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.quote-author::before {
+  content: '—  ';
+  color: var(--accent);
+}
+
+/* ============================================
+   CATEGORIES
+   ============================================ */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5px;
+  background: var(--border);
+}
+
+.category-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 3/4;
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(30%);
+  transition: all 0.6s var(--transition);
+}
+
+.category-card:hover img {
+  transform: scale(1.08);
+  filter: grayscale(0%);
+}
+
+.category-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+  transition: background 0.4s;
+}
+
+.category-card:hover .category-overlay {
+  background: linear-gradient(to top, rgba(198,167,106,0.85) 0%, rgba(198,167,106,0.2) 60%, transparent 100%);
+}
+
+[data-theme="dark"] .category-card:hover .category-overlay {
+  background: linear-gradient(to top, rgba(212,175,55,0.85) 0%, rgba(212,175,55,0.2) 60%, transparent 100%);
+}
+
+.category-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.75rem;
+}
+
+.category-count {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.4rem;
+}
+
+.category-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+}
+
+/* ============================================
+   FEATURED ISSUE
+   ============================================ */
+.issue-section {
+  padding: 8rem 0;
+  background: var(--text);
+  color: white;
+  overflow: hidden;
+}
+
+.issue-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.issue-cover {
+  position: relative;
+}
+
+.issue-cover-img {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  box-shadow: 40px 40px 0 rgba(198,167,106,0.2);
+  transition: transform 0.6s var(--transition);
+}
+
+.issue-cover:hover .issue-cover-img { transform: translate(-5px, -5px); }
+
+.issue-cover-shadow {
+  position: absolute;
+  inset: 40px -40px -40px 40px;
+  background: var(--accent);
+  opacity: 0.15;
+  z-index: -1;
+}
+
+.issue-edition {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.issue-edition::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.issue-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.issue-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.issue-desc {
+  font-family: var(--font-accent);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 3rem;
+  max-width: 480px;
+}
+
+.issue-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.issue-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.issue-highlight-item::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 0.6rem;
+  flex-shrink: 0;
+}
+
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 2.2rem;
+  background: white;
+  color: var(--text);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.btn-white:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(198,167,106,0.4);
+}
+
+/* ============================================
+   NEWSLETTER
+   ============================================ */
+.newsletter-section {
+  padding: 7rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(198,167,106,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.newsletter-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.newsletter-eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.newsletter-desc {
+  font-family: var(--font-accent);
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+  margin: 0 auto 1rem;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-card);
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+.newsletter-input::placeholder { color: var(--text-light); }
+
+.newsletter-btn {
+  padding: 1rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover { background: var(--accent-dark); }
+
+.newsletter-note {
+  font-size: 0.65rem;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   ARTICLE PAGE
+   ============================================ */
+.article-page {
+  display: none;
+}
+
+.article-page.active {
+  display: block;
+}
+
+.article-hero {
+  position: relative;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.article-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 100%);
+}
+
+.article-hero-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.article-body-wrap {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.article-header-category {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-header-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.article-header-subtitle {
+  font-family: var(--font-accent);
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.article-byline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.byline-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.byline-author img {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.byline-sep { color: var(--border-strong); }
+
+.byline-meta { font-size: 0.7rem; color: var(--text-light); }
+
+.article-share {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.share-btn {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.share-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.article-body {
+  font-family: var(--font-accent);
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.article-body p { margin-bottom: 1.75rem; }
+
+.article-body h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 3rem 0 1rem;
+  color: var(--text);
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 1rem 2rem;
+  margin: 2.5rem 0;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+.article-body .drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.1em;
+  margin-top: 0.1em;
+  color: var(--accent);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer {
+  background: var(--text);
+  color: white;
+  padding: 5rem 0 2rem;
+}
+
+.footer-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 2.5rem;
+}
+
+.footer-brand {}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.footer-logo span { color: var(--accent); }
+
+.footer-tagline {
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  max-width: 280px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.social-link {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.social-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.footer-col-title {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 1.5rem;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: white; }
+
+.footer-newsletter-form {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-newsletter-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.8rem;
+  color: white;
+  font-family: var(--font-body);
+}
+
+.footer-newsletter-input::placeholder { color: rgba(255,255,255,0.25); }
+
+.footer-newsletter-btn {
+  padding: 0.75rem 1rem;
+  background: var(--accent);
+  border: none;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.footer-newsletter-btn:hover { background: var(--accent-dark); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copyright {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+}
+
+.footer-legal {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-legal a {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.3s;
+}
+
+.footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+/* ============================================
+   ANIMATIONS & REVEAL
+   ============================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================
+   DECORATIVE ELEMENTS
+   ============================================ */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.ornament-icon {
+  font-size: 0.5rem;
+  color: var(--accent);
+  letter-spacing: 0.5em;
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+.toast {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  background: var(--text);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  z-index: 2000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s var(--transition);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 320px;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-icon { color: var(--accent); }
+
+/* ============================================
+   BACK TO HOME
+   ============================================ */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 1rem 3rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+}
+
+.back-btn:hover { color: var(--accent); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1200px) {
+  .featured-grid { grid-template-columns: 1.3fr 1fr 1fr; }
+  .categories-grid { grid-template-columns: repeat(4, 1fr); }
+  .articles-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1.5fr 1fr 1fr; }
+  .footer-top > *:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 900px) {
+  section { padding: 4rem 0; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero-content { padding: 0 1.5rem 5rem; }
+  .hero-scroll { right: 1.5rem; }
+  .hero-dots { left: 1.5rem; }
+  .section-header { padding: 0 1.5rem; flex-wrap: wrap; gap: 1rem; }
+  .container { padding: 0 1.5rem; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .story-card.large { grid-row: auto; }
+  .story-card.large .card-img-wrap { min-height: 350px; }
+  .articles-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .issue-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .issue-cover-img { max-width: 280px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .issue-section { padding: 4rem 0; }
+  .issue-inner { padding: 0 1.5rem; }
+}
+
+@media (max-width: 600px) {
+  .nav-inner { padding: 0 1.25rem; }
+  .hero-title { font-size: 2rem; }
+  .articles-grid { grid-template-columns: 1fr; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .trending-item { grid-template-columns: 50px 1fr; }
+  .trending-stats { display: none; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-btn { width: 100%; text-align: center; }
+  .article-byline { flex-wrap: wrap; }
+  .footer-inner { padding: 0 1.5rem; }
+}
+
+/* ============================================
+   PRINT / MISC
+   ============================================ */
+::selection { background: var(--accent); color: white; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- READING PROGRESS -->
+<div class="reading-progress" id="readingProgress"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">ÉDITION</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-inner">
+    <p class="search-label">What are you looking for?</p>
+    <div class="search-input-wrap">
+      <input type="text" class="search-input" id="searchInput" placeholder="Fashion, Culture, Travel…" autocomplete="off">
+      <button class="search-close" onclick="closeSearch()" aria-label="Close search">✕</button>
+    </div>
+    <p class="search-hint">Press ESC to close · Enter to search</p>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" onclick="closeMobileNav()" aria-label="Close menu">✕</button>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.1s">Home</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.15s">Latest</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.2s">Culture</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.25s">Lifestyle</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.3s">Fashion</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.35s">Technology</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.4s">Travel</a>
+  <a href="#" onclick="closeMobileNav()" style="animation-delay:0.45s">About</a>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showHomepage()">ÉDITI<span>O</span>N</a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showHomepage(); return false;">Home</a></li>
+      <li><a href="#latest">Latest</a></li>
+      <li><a href="#culture">Culture</a></li>
+      <li><a href="#lifestyle">Lifestyle</a></li>
+      <li><a href="#fashion">Fashion</a></li>
+      <li><a href="#technology">Technology</a></li>
+      <li><a href="#travel">Travel</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" onclick="openSearch()" aria-label="Search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+      <button class="nav-icon-btn theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">
+        <svg class="theme-icon" id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="hamburger" onclick="openMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================
+     HOMEPAGE
+     ============================================ -->
+<main id="homepage">
+
+  <!-- HERO -->
+  <section class="hero" id="heroSection" aria-label="Hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <div class="hero-meta">
+        <span class="hero-category" id="heroCategory">Fashion</span>
+        <span class="hero-date">June 2026</span>
+      </div>
+      <h1 class="hero-title" id="heroTitle">The <em>New Language</em><br>of Luxury Dressing</h1>
+      <p class="hero-subtitle" id="heroSubtitle">How a generation of visionary designers is rewriting the rules of couture — and why silence has become the ultimate statement.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="openArticle('article-fashion')">
+          Read Story
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <a href="#featured" class="btn-ghost">
+          Explore Issue
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-dots" id="heroDots">
+      <div class="hero-dot active" onclick="setHeroSlide(0)"></div>
+      <div class="hero-dot" onclick="setHeroSlide(1)"></div>
+      <div class="hero-dot" onclick="setHeroSlide(2)"></div>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item">Culture Issue 2026</span>
+      <span class="ticker-item">The Future of Fashion</span>
+      <span class="ticker-item">Minimalism Redefined</span>
+      <span class="ticker-item">Travel & Architecture</span>
+      <span class="ticker-item">Inside Tokyo's Art Scene</span>
+      <span class="ticker-item">The New Luxury</span>
+      <span class="ticker-item">Design Awards 2026</span>
+      <span class="ticker-item">Culture Issue 2026</span>
+      <span class="ticker-item">The Future of Fashion</span>
+      <span class="ticker-item">Minimalism Redefined</span>
+      <span class="ticker-item">Travel & Architecture</span>
+      <span class="ticker-item">Inside Tokyo's Art Scene</span>
+      <span class="ticker-item">The New Luxury</span>
+      <span class="ticker-item">Design Awards 2026</span>
+    </div>
+  </div>
+
+  <!-- FEATURED STORIES -->
+  <section id="featured" style="padding:0; background:var(--bg);">
+    <div class="section-header reveal" style="padding-top:5rem;">
+      <div>
+        <span class="section-label">This Week</span>
+        <h2 class="section-title">Featured <em>Stories</em></h2>
+      </div>
+      <a href="#" class="section-link">View All Stories</a>
+    </div>
+    <div class="featured-grid reveal">
+      <!-- Large card -->
+      <div class="story-card large" onclick="openArticle('article-architecture')">
+        <div class="card-img-wrap" style="height:100%;">
+          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80" alt="Architecture story" loading="lazy">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Architecture</span>
+          <h3 class="card-title">Where Concrete Meets Sky: The New Masters of Space</h3>
+          <p class="card-excerpt">A journey through the studios of the architects reshaping how we inhabit the world.</p>
+          <div class="card-meta">
+            <img class="card-author-img" src="https://i.pravatar.cc/40?img=47" alt="Author">
+            <span>Elena Marchetti</span>
+            <span class="card-meta-dot">·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </div>
+      <!-- Medium cards -->
+      <div class="story-card medium" onclick="openArticle('article-travel')">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=600&q=80" alt="Travel" loading="lazy">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Travel</span>
+          <h3 class="card-title">Kyoto in Winter: A City Turned Quiet Poetry</h3>
+          <p class="card-excerpt">Off-season revelations in Japan's ancient capital.</p>
+          <div class="card-meta">
+            <img class="card-author-img" src="https://i.pravatar.cc/40?img=32" alt="Author">
+            <span>James Okoro</span>
+            <span class="card-meta-dot">·</span>
+            <span>6 min</span>
+          </div>
+        </div>
+      </div>
+      <div class="story-card medium" onclick="openArticle('article-food')">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Food" loading="lazy">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Lifestyle</span>
+          <h3 class="card-title">The Table as Theatre: Fine Dining's New Dramaturgy</h3>
+          <p class="card-excerpt">Why the world's best chefs are thinking like playwrights.</p>
+          <div class="card-meta">
+            <img class="card-author-img" src="https://i.pravatar.cc/40?img=44" alt="Author">
+            <span>Sofia Reyes</span>
+            <span class="card-meta-dot">·</span>
+            <span>5 min</span>
+          </div>
+        </div>
+      </div>
+      <!-- Small cards -->
+      <div class="story-card small" onclick="openArticle('article-fashion')">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Fashion" loading="lazy">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Fashion</span>
+          <h3 class="card-title">The Quiet Luxury Manifesto</h3>
+          <div class="card-meta">
+            <span>4 min</span>
+            <span class="card-meta-dot">·</span>
+            <span>May 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="story-card small" onclick="openArticle('article-tech')">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Tech" loading="lazy">
+          <div class="card-overlay"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Technology</span>
+          <h3 class="card-title">When AI Learns to Feel Beauty</h3>
+          <div class="card-meta">
+            <span>7 min</span>
+            <span class="card-meta-dot">·</span>
+            <span>May 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST ARTICLES -->
+  <section id="latest">
+    <div class="section-header reveal">
+      <div>
+        <span class="section-label">Fresh This Month</span>
+        <h2 class="section-title">Latest <em>Articles</em></h2>
+      </div>
+      <a href="#" class="section-link">Browse All</a>
+    </div>
+    <div class="container">
+      <div class="articles-grid">
+
+        <div class="article-card reveal reveal-delay-1" onclick="openArticle('article-art')">
+          <div class="article-card-img">
+            <img src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=700&q=80" alt="Art" loading="lazy">
+            <div class="article-card-img-overlay"></div>
+            <button class="article-bookmark" onclick="toggleBookmark(this); event.stopPropagation()" aria-label="Bookmark">
+              <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
+          <p class="article-category">Culture</p>
+          <h3 class="article-title">The Gallery That Refuses to Explain Itself</h3>
+          <p class="article-excerpt">In Copenhagen, a new institution is redefining what art spaces can be — by saying almost nothing at all.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <img class="author-avatar" src="https://i.pravatar.cc/40?img=12" alt="Author">
+              <span class="author-name">Astrid Lindqvist</span>
+            </div>
+            <span>June 1, 2026 · 5 min</span>
+          </div>
+        </div>
+
+        <div class="article-card reveal reveal-delay-2" onclick="openArticle('article-photo')">
+          <div class="article-card-img">
+            <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=700&q=80" alt="Photography" loading="lazy">
+            <div class="article-card-img-overlay"></div>
+            <button class="article-bookmark" onclick="toggleBookmark(this); event.stopPropagation()" aria-label="Bookmark">
+              <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
+          <p class="article-category">Photography</p>
+          <h3 class="article-title">Capturing the Invisible: An Interview with Yuki Tanaka</h3>
+          <p class="article-excerpt">The Japanese photographer whose images find silence in cities that never sleep.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <img class="author-avatar" src="https://i.pravatar.cc/40?img=25" alt="Author">
+              <span class="author-name">Marco Bellini</span>
+            </div>
+            <span>May 28, 2026 · 9 min</span>
+          </div>
+        </div>
+
+        <div class="article-card reveal reveal-delay-3" onclick="openArticle('article-design')">
+          <div class="article-card-img">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80" alt="Design" loading="lazy">
+            <div class="article-card-img-overlay"></div>
+            <button class="article-bookmark" onclick="toggleBookmark(this); event.stopPropagation()" aria-label="Bookmark">
+              <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
+          <p class="article-category">Design</p>
+          <h3 class="article-title">The Chair That Changed Everything About Sitting</h3>
+          <p class="article-excerpt">How one Scandinavian design studio upended decades of ergonomic thinking.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <img class="author-avatar" src="https://i.pravatar.cc/40?img=37" alt="Author">
+              <span class="author-name">Nadia Johansson</span>
+            </div>
+            <span>May 25, 2026 · 6 min</span>
+          </div>
+        </div>
+
+        <div class="article-card reveal reveal-delay-1" onclick="openArticle('article-tech')">
+          <div class="article-card-img">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80" alt="Technology" loading="lazy">
+            <div class="article-card-img-overlay"></div>
+            <button class="article-bookmark" onclick="toggleBookmark(this); event.stopPropagation()" aria-label="Bookmark">
+              <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
+          <p class="article-category">Technology</p>
+          <h3 class="article-title">Post-Screen: Life After the Display</h3>
+          <p class="article-excerpt">Spatial computing is here. What comes next will surprise even the people building it.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <img class="author-avatar" src="https://i.pravatar.cc/40?img=51" alt="Author">
+              <span class="author-name">Kai Nakamura</span>
+            </div>
+            <span>May 22, 2026 · 11 min</span>
+          </div>
+        </div>
+
+        <div class="article-card reveal reveal-delay-2" onclick="openArticle('article-travel')">
+          <div class="article-card-img">
+            <img src="https://images.unsplash.com/photo-1505739998589-00fc191ce01d?w=700&q=80" alt="Travel" loading="lazy">
+            <div class="article-card-img-overlay"></div>
+            <button class="article-bookmark" onclick="toggleBookmark(this); event.stopPropagation()" aria-label="Bookmark">
+              <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
+          <p class="article-category">Travel</p>
+          <h3 class="article-title">Lisbon After Dark: The City That Exhales at Midnight</h3>
+          <p class="article-excerpt">A nocturnal portrait of Europe's most seductive capital, written in light and fado.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <img class="author-avatar" src="https://i.pravatar.cc/40?img=60" alt="Author">
+              <span class="author-name">Isabel Ferreira</span>
+            </div>
+            <span>May 18, 2026 · 7 min</span>
+          </div>
+        </div>
+
+        <div class="article-card reveal reveal-delay-3" onclick="openArticle('article-wellness')">
+          <div class="article-card-img">
+            <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=700&q=80" alt="Wellness" loading="lazy">
+            <div class="article-card-img-overlay"></div>
+            <button class="article-bookmark" onclick="toggleBookmark(this); event.stopPropagation()" aria-label="Bookmark">
+              <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </div>
+          <p class="article-category">Lifestyle</p>
+          <h3 class="article-title">The Art of Slowing Down in a World That Won't</h3>
+          <p class="article-excerpt">Silence retreats, analog rituals, and the philosophers redefining modern rest.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <img class="author-avatar" src="https://i.pravatar.cc/40?img=5" alt="Author">
+              <span class="author-name">Clara Dubois</span>
+            </div>
+            <span>May 14, 2026 · 8 min</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING -->
+  <section class="trending-section" id="trending">
+    <div class="section-header reveal">
+      <div>
+        <span class="section-label">Most Read</span>
+        <h2 class="section-title">Trending <em>Now</em></h2>
+      </div>
+      <a href="#" class="section-link">See All</a>
+    </div>
+    <div class="container">
+      <div class="trending-list">
+        <div class="trending-item reveal" onclick="openArticle('article-architecture')">
+          <div class="trending-num">01</div>
+          <div class="trending-content">
+            <p class="trending-cat">Architecture</p>
+            <h4 class="trending-title">Where Concrete Meets Sky: The New Masters of Space and Form</h4>
+          </div>
+          <div class="trending-stats">
+            <span class="trending-reads">24.8K</span>
+            <span>reads this week</span>
+          </div>
+        </div>
+        <div class="trending-item reveal reveal-delay-1" onclick="openArticle('article-fashion')">
+          <div class="trending-num">02</div>
+          <div class="trending-content">
+            <p class="trending-cat">Fashion</p>
+            <h4 class="trending-title">The New Language of Luxury Dressing</h4>
+          </div>
+          <div class="trending-stats">
+            <span class="trending-reads">19.2K</span>
+            <span>reads this week</span>
+          </div>
+        </div>
+        <div class="trending-item reveal reveal-delay-2" onclick="openArticle('article-tech')">
+          <div class="trending-num">03</div>
+          <div class="trending-content">
+            <p class="trending-cat">Technology</p>
+            <h4 class="trending-title">Post-Screen: Life After the Display</h4>
+          </div>
+          <div class="trending-stats">
+            <span class="trending-reads">16.7K</span>
+            <span>reads this week</span>
+          </div>
+        </div>
+        <div class="trending-item reveal reveal-delay-3" onclick="openArticle('article-travel')">
+          <div class="trending-num">04</div>
+          <div class="trending-content">
+            <p class="trending-cat">Travel</p>
+            <h4 class="trending-title">Kyoto in Winter: A City Turned Quiet Poetry</h4>
+          </div>
+          <div class="trending-stats">
+            <span class="trending-reads">14.3K</span>
+            <span>reads this week</span>
+          </div>
+        </div>
+        <div class="trending-item reveal reveal-delay-4" onclick="openArticle('article-art')">
+          <div class="trending-num">05</div>
+          <div class="trending-content">
+            <p class="trending-cat">Culture</p>
+            <h4 class="trending-title">The Gallery That Refuses to Explain Itself</h4>
+          </div>
+          <div class="trending-stats">
+            <span class="trending-reads">12.1K</span>
+            <span>reads this week</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section reveal">
+    <div class="container">
+      <blockquote class="quote-text">
+        "Luxury is not about price or scarcity. It is about the quality of attention — given to craft, to time, to the things that make us quietly, profoundly human."
+      </blockquote>
+      <p class="quote-author">The ÉDITION Manifesto, 2026</p>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="categories" style="padding-bottom:0;">
+    <div class="section-header reveal">
+      <div>
+        <span class="section-label">Explore</span>
+        <h2 class="section-title">Browse by <em>Category</em></h2>
+      </div>
+    </div>
+    <div class="categories-grid reveal">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Fashion" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">142 stories</span>
+          <h3 class="category-name">Fashion</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Technology" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">98 stories</span>
+          <h3 class="category-name">Technology</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80" alt="Culture" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">211 stories</span>
+          <h3 class="category-name">Culture</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=600&q=80" alt="Travel" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">167 stories</span>
+          <h3 class="category-name">Travel</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" alt="Design" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">89 stories</span>
+          <h3 class="category-name">Design</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=600&q=80" alt="Lifestyle" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">123 stories</span>
+          <h3 class="category-name">Lifestyle</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80" alt="Business" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">74 stories</span>
+          <h3 class="category-name">Business</h3>
+        </div>
+      </div>
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80" alt="Photography" loading="lazy">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <span class="category-count">56 stories</span>
+          <h3 class="category-name">Photography</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ISSUE -->
+  <section class="issue-section" id="issue">
+    <div class="issue-inner">
+      <div class="issue-cover reveal">
+        <img class="issue-cover-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=90" alt="Current Issue Cover" loading="lazy">
+        <div class="issue-cover-shadow"></div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="issue-edition">Volume XII · Issue 06 · June 2026</p>
+        <h2 class="issue-title">The <em>Quiet</em><br>Revolution</h2>
+        <p class="issue-desc">Our most provocative issue yet: a 220-page exploration of how restraint, craft, and intentional living are reshaping culture from studios in Tokyo to ateliers in Paris.</p>
+        <div class="issue-highlights">
+          <div class="issue-highlight-item">The architects building for silence, not show</div>
+          <div class="issue-highlight-item">Inside the ateliers where speed is the enemy</div>
+          <div class="issue-highlight-item">A photographer's 12-month study of dawn light</div>
+          <div class="issue-highlight-item">Why the most influential people you've never heard of matter</div>
+        </div>
+        <button class="btn-white">
+          Explore Issue
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="newsletter-bg"></div>
+    <div class="newsletter-inner reveal">
+      <div class="ornament" style="justify-content:center;"><span class="ornament-icon">◆ ◆ ◆</span></div>
+      <p class="newsletter-eyebrow">The Inner Circle</p>
+      <h2 class="newsletter-title">Join 25,000+<br><em>Readers</em></h2>
+      <p class="newsletter-desc">Curated editorial picks, exclusive interviews, and the ideas shaping culture — delivered to your inbox each week. No noise. Only signal.</p>
+      <div class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Your email address" id="emailInput">
+        <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe</button>
+      </div>
+      <p class="newsletter-note">No spam, ever. Unsubscribe at any time.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================
+     ARTICLE PAGES
+     ============================================ -->
+<div id="articleContainer" class="article-page">
+  <button class="back-btn" onclick="showHomepage()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back to Home
+  </button>
+
+  <div class="article-hero" id="articleHero">
+    <img id="articleHeroImg" src="" alt="Article hero" loading="eager">
+    <div class="article-hero-overlay"></div>
+  </div>
+
+  <div class="article-body-wrap">
+    <div class="article-header">
+      <span class="article-header-category" id="articleCategory">Category</span>
+      <h1 class="article-header-title" id="articleTitle">Article Title</h1>
+      <p class="article-header-subtitle" id="articleSubtitle">Article subtitle goes here.</p>
+      <div class="article-byline">
+        <div class="byline-author">
+          <img src="https://i.pravatar.cc/40?img=47" alt="Author" id="articleAuthorImg">
+          <div>
+            <div style="font-weight:500;color:var(--text);font-size:0.85rem;" id="articleAuthorName">Author Name</div>
+            <div style="font-size:0.7rem;color:var(--text-light);">Contributing Editor</div>
+          </div>
+        </div>
+        <span class="byline-sep">|</span>
+        <span class="byline-meta" id="articleDate">June 2026</span>
+        <span class="byline-sep">|</span>
+        <span class="byline-meta" id="articleReadTime">8 min read</span>
+        <span class="byline-sep">|</span>
+        <div class="article-share">
+          <button class="share-btn" title="Share" onclick="showToast('Link copied to clipboard')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+          <button class="share-btn" title="Bookmark" onclick="showToast('Article saved to bookmarks')" id="articleBookmarkBtn">
+            <svg width="12" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-body" id="articleBody"></div>
+
+    <!-- Related Articles -->
+    <div style="margin-top:4rem; padding-top:3rem; border-top: 1px solid var(--border);">
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:2rem;">You Might Also <em style='font-style:italic;color:var(--accent)'>Like</em></h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+        <div class="article-card" onclick="openArticle('article-travel')">
+          <div class="article-card-img"><img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=500&q=70" alt="Related" loading="lazy"></div>
+          <p class="article-category">Travel</p>
+          <h4 class="article-title" style="font-size:1rem;">Kyoto in Winter</h4>
+        </div>
+        <div class="article-card" onclick="openArticle('article-art')">
+          <div class="article-card-img"><img src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=500&q=70" alt="Related" loading="lazy"></div>
+          <p class="article-category">Culture</p>
+          <h4 class="article-title" style="font-size:1rem;">The Gallery That Refuses</h4>
+        </div>
+        <div class="article-card" onclick="openArticle('article-design')">
+          <div class="article-card-img"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=70" alt="Related" loading="lazy"></div>
+          <p class="article-category">Design</p>
+          <h4 class="article-title" style="font-size:1rem;">The Chair That Changed Everything</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">ÉDITI<span>O</span>N</div>
+        <p class="footer-tagline">A world of refined taste, original thought, and exceptional craft. Published monthly from our studios in London, Tokyo, and New York.</p>
+        <div class="footer-social">
+          <a class="social-link" href="#" title="Instagram" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+            </svg>
+          </a>
+          <a class="social-link" href="#" title="Twitter/X" aria-label="Twitter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a class="social-link" href="#" title="Pinterest" aria-label="Pinterest">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 4.586 18.88L15 15s-.5-2 .5-4c.5-1 1.5-2 2.5-2s2 1 2 2.5-1 2.5-1 2.5 1 3.5-1 5"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </a>
+          <a class="social-link" href="#" title="LinkedIn" aria-label="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Latest</a></li>
+          <li><a href="#">Culture</a></li>
+          <li><a href="#">Fashion</a></li>
+          <li><a href="#">Lifestyle</a></li>
+          <li><a href="#">Travel</a></li>
+          <li><a href="#">Technology</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Company</p>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Advertise</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press Kit</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Newsletter</p>
+        <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:1.25rem;line-height:1.6;">Get the best of ÉDITION in your inbox weekly.</p>
+        <div class="footer-newsletter-form">
+          <input type="email" class="footer-newsletter-input" placeholder="Your email">
+          <button class="footer-newsletter-btn" onclick="showToast('Welcome to ÉDITION!')">Join</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 ÉDITION Magazine. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Settings</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg class="toast-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+  <span id="toastMessage">Done!</span>
+</div>
+
+<script>
+// ============================================
+// DATA
+// ============================================
+const articles = {
+  'article-fashion': {
+    category: 'Fashion',
+    title: 'The New Language of Luxury Dressing',
+    subtitle: 'How a generation of visionary designers is rewriting the rules of couture — and why silence has become the ultimate statement of wealth and taste.',
+    author: 'Sophie Laurent',
+    authorImg: 'https://i.pravatar.cc/40?img=47',
+    date: 'June 3, 2026',
+    readTime: '9 min read',
+    heroImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=85',
+    body: `<p class="drop-cap">There is a particular quality of silence that surrounds the truly extraordinary. It is not emptiness — it is weight. The most expensive suit in any room is rarely the one with the most buttons. It is the one that makes all the others seem, quite suddenly, to be trying too hard.</p>
+    
+    <p>This is the grammar of the new luxury. After decades of logomania, maximalism, and the democratization of aspiration, a quieter language has emerged — one spoken in the weight of fabric, the architecture of a collar, the decision to remove rather than add.</p>
+
+    <h2>The Architects of Restraint</h2>
+    
+    <p>In the ateliers of Paris and the studios of Antwerp, a group of designers has been working on a shared thesis: that the most powerful garments are those which communicate through restraint. The result is an aesthetic that is simultaneously ancient and radically new.</p>
+    
+    <blockquote>"I want to make clothes that are invisible until they are not," says one designer whose name you might not yet know. "That is the only kind of luxury that matters now."</blockquote>
+    
+    <p>The shift is measurable. Across the industry's most closely watched brands, the number of visible logos has declined sharply. Silhouettes have grown longer, cleaner, more architectural. The palette has narrowed toward the primordial: stone, fog, water, shadow.</p>
+
+    <h2>The Consumer Behind the Shift</h2>
+
+    <p>The consumers driving this change are those who have, as one sociologist puts it, "graduated from wanting to be seen to wanting to be known." They have owned the logos. They have done the showing. What they want now is the garment that fits so perfectly, drapes so naturally, endures so elegantly that it needs no announcement.</p>
+    
+    <p>For these buyers, the signifier is craft: the hand-rolled hem, the single-piece collar, the buttonhole that took twelve minutes to make. These are the new codes, invisible to most, unmissable to those who know.</p>
+
+    <p>Whether this represents a permanent shift or merely the latest oscillation in fashion's eternal pendulum remains an open question. But for now, silence has never spoken so loudly.</p>`
+  },
+
+  'article-architecture': {
+    category: 'Architecture',
+    title: 'Where Concrete Meets Sky: The New Masters of Space',
+    subtitle: 'A journey through the studios and commissions of the architects quietly reshaping how civilization inhabits the earth.',
+    author: 'Elena Marchetti',
+    authorImg: 'https://i.pravatar.cc/40?img=12',
+    date: 'May 30, 2026',
+    readTime: '8 min read',
+    heroImg: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=85',
+    body: `<p class="drop-cap">Every generation produces a handful of architects who understand something the rest of their peers are still learning. What that handful understands now is simple, profound, and almost impossible to execute: space should feel like weather.</p>
+
+    <p>Not a metaphor — something literal. When you enter the buildings these architects make, you experience a change in pressure. The light comes differently. The sound behaves unusually. You slow down, not because you have decided to, but because the space insists.</p>
+
+    <h2>Against Spectacle</h2>
+    
+    <p>The dominant mode in architecture for the past quarter century has been spectacle. The icon. The landmark. The building you take a photograph of from outside. What has been less discussed, and is only now coming to be appreciated, is the building that changes how you feel inside it.</p>
+
+    <blockquote>"We have built enough monuments," says one of this generation's most closely watched architects. "What we have not built enough of is rooms where people feel genuinely at peace."</blockquote>
+
+    <p>This sounds like a humble ambition. It is not. It is enormously difficult, and the architects pursuing it know it. The technical knowledge required — how light moves through a space across the course of a day, how acoustic properties shape psychological experience, how materials age and what they communicate as they do — is prodigious.</p>
+
+    <h2>The Materials of Intimacy</h2>
+    
+    <p>Concrete, for all its industrial associations, is one of the preferred materials of this new architecture of intimacy. Not the cold, institutional concrete of midcentury modernism, but concrete that has been made to receive light differently — board-formed, polished, poured in unusual compositions that give it warmth.</p>
+
+    <p>What emerges from these studios is not a style in the conventional sense. It is closer to a set of values: slowness, presence, the primacy of human experience over visual impact. In a culture of images, it insists on the irreplaceable value of being somewhere.</p>`
+  },
+
+  'article-travel': {
+    category: 'Travel',
+    title: 'Kyoto in Winter: A City Turned Quiet Poetry',
+    subtitle: 'Off-season revelations in Japan\'s ancient capital, where the absence of tourists reveals the city\'s truest nature.',
+    author: 'James Okoro',
+    authorImg: 'https://i.pravatar.cc/40?img=32',
+    date: 'May 28, 2026',
+    readTime: '6 min read',
+    heroImg: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1600&q=85',
+    body: `<p class="drop-cap">The most beautiful I have ever seen Kyoto was at six in the morning in February, when snow had fallen in the night on the Philosopher's Path and the bamboo groves of Arashiyama were weighted into a stillness I had not known was possible in a city.</p>
+
+    <p>I had come expecting to be cold. I had not expected to be transformed. But Kyoto in winter operates on a different logic than Kyoto in cherry blossom season — a logic of subtraction, of what remains when everything incidental has been removed.</p>
+
+    <h2>The City Without Crowds</h2>
+    
+    <p>In April and November, Kyoto belongs to the world. In February, it belongs to itself. The temples are quieter. The ryokans are cheaper. The streets, in the early morning, are entirely empty — and in that emptiness you can finally hear the city's actual voice, which turns out to be very quiet indeed.</p>
+
+    <blockquote>"There is a Japanese concept, ma, which means the beauty of empty space, of pause, of the interval between things. I did not understand it until I stood alone in the garden of Ryoan-ji in February snow."</blockquote>
+
+    <p>The rock garden at Ryoan-ji, one of the most reproduced images in all of Japanese aesthetics, is usually experienced across a row of heads and camera screens. Alone, in the cold, it becomes something genuinely mysterious — fifteen stones in raked white gravel, and no explanation that satisfies.</p>
+
+    <h2>Eating in Winter Kyoto</h2>
+
+    <p>If there is a better version of kaiseki than the one served in a small room facing a garden in winter, I have not found it. The cuisine — meticulously seasonal, obsessively local, arranged with an attention to beauty that borders on devotional — meets its ideal moment in the cold months, when the produce is root vegetables, dried persimmons, delicate river fish.</p>
+
+    <p>I ate eight courses at a counter with six seats and one chef who did not speak English and did not need to. The food announced itself entirely. I took no photographs. Some things should be memories, not images.</p>`
+  },
+
+  'article-tech': {
+    category: 'Technology',
+    title: 'Post-Screen: Life After the Display',
+    subtitle: 'Spatial computing has arrived. The pioneers building its future are more cautious, and more visionary, than you might expect.',
+    author: 'Kai Nakamura',
+    authorImg: 'https://i.pravatar.cc/40?img=51',
+    date: 'May 22, 2026',
+    readTime: '11 min read',
+    heroImg: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1600&q=85',
+    body: `<p class="drop-cap">The most interesting thing about the people building the post-screen future is how rarely they talk about screens. What they talk about, instead, is attention — specifically, where it goes, and what happens to human beings when the surfaces demanding it multiply beyond any individual's capacity to manage them.</p>
+
+    <p>In studios from San Francisco to Seoul, a cohort of designers and engineers is working on what comes after the rectangle. Their consensus, arrived at independently and with varying degrees of optimism, is that the rectangle had a good run, and its time is ending.</p>
+
+    <h2>What Spatial Computing Actually Feels Like</h2>
+    
+    <p>I have spent time in several early spatial computing environments over the past year, and what strikes me most is not the novelty — it is the familiarity. The best implementations don't feel like science fiction. They feel like the natural extension of working at a desk, or reading on a sofa.</p>
+
+    <blockquote>"We are not trying to replace the physical world. We are trying to make information fit inside it more gracefully. That sounds humble. The engineering required to do it is not."</blockquote>
+
+    <p>The failures, when they occur, are instructive. The environments that feel overwhelming are those designed by people who confused possibility with desirability — who filled every plane of vision with content because they could, not because it served any human need.</p>
+
+    <h2>The Designers Getting It Right</h2>
+
+    <p>The environments that feel genuinely promising share a quality that is difficult to articulate but unmistakable in experience: they respect the primacy of the physical world. They add to it without crowding it. They answer questions before you have fully asked them. They disappear when you don't need them.</p>
+
+    <p>This is harder than it sounds, and it requires a different kind of design thinking — one that takes, as its starting point, the texture of ordinary human attention rather than the specifications of a display panel.</p>
+
+    <p>The screen is not going away tomorrow, or next year, or probably this decade. But the assumption that rectangles are the natural and final form of human-information interaction is dissolving. What replaces it will shape the lived experience of billions of people. The people doing that shaping, at their best, know the weight of what they are doing.</p>`
+  },
+
+  'article-art': {
+    category: 'Culture',
+    title: 'The Gallery That Refuses to Explain Itself',
+    subtitle: 'In Copenhagen, a new kind of art institution is redefining what experiencing art can mean — by stripping away almost everything we expect.',
+    author: 'Astrid Lindqvist',
+    authorImg: 'https://i.pravatar.cc/40?img=25',
+    date: 'June 1, 2026',
+    readTime: '5 min read',
+    heroImg: 'https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=1600&q=85',
+    body: `<p class="drop-cap">There are no wall texts at GRUND. No exhibition catalog. No audio guide, no curator's statement, no explanatory panel by the door. There is the art, and there is you, and there is whatever happens between you.</p>
+
+    <p>The new Copenhagen institution, which opened in a converted industrial building in the Meatpacking District last autumn, has attracted more debate than any gallery opening in recent European memory — which is remarkable, given that the building itself is entirely white, rectangular, and makes no architectural statement whatsoever.</p>
+
+    <h2>An Argument About Art and Language</h2>
+    
+    <p>The decision to remove all interpretive material is, its founders insist, a philosophical position rather than a design choice. Their argument: that the infrastructure of explanation which has grown up around contemporary art over the past forty years has fundamentally altered the experience of art, usually for the worse.</p>
+
+    <blockquote>"We have taught people that they need to understand a work before they can feel it. That is exactly backwards. The feeling comes first. The understanding, if it comes, comes later, slowly, and often differently than the text predicted."</blockquote>
+
+    <p>Critics of the institution — and there are many — argue that this approach is elitist: that removing explanation privileges those with existing art-world knowledge, and excludes those without it. The founders' response is, in essence, that the explanation was also a form of exclusion — one that told visitors how to feel before they had a chance to feel anything.</p>
+
+    <h2>What Happens Inside</h2>
+
+    <p>I visited on a Tuesday afternoon in November. There were perhaps twenty other visitors. The works on view — painting, sculpture, video, some things that resist categorization — were presented without comment of any kind.</p>
+
+    <p>I stood in front of one painting for twenty minutes. I have no idea what it was about, in any conventional sense. I know exactly what it made me feel. I have been thinking about it for weeks. That, perhaps, is the point.</p>`
+  },
+
+  'article-design': {
+    category: 'Design',
+    title: 'The Chair That Changed Everything About Sitting',
+    subtitle: 'How a small Scandinavian studio upended decades of ergonomic orthodoxy — and what their work reveals about the relationship between comfort and form.',
+    author: 'Nadia Johansson',
+    authorImg: 'https://i.pravatar.cc/40?img=37',
+    date: 'May 25, 2026',
+    readTime: '6 min read',
+    heroImg: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600&q=85',
+    body: `<p class="drop-cap">The chair had been in production for eight years before the design world noticed it. There was no launch campaign, no press release, no installation at a design fair. It appeared on the market quietly, was adopted slowly by a small community of people who knew, and arrived at fame the old-fashioned way — by being, in a very quiet sense, extraordinary.</p>
+
+    <p>The studio behind it — three people working in a converted barn outside Oslo — had spent four years on a single question: what does it actually mean for a chair to be comfortable?</p>
+
+    <h2>Against Ergonomics-as-Engineering</h2>
+    
+    <p>The conventional approach to ergonomic seating begins with the body and asks: what support does this body require? The answer, over decades of research and development, has been a great deal of adjustability, a great deal of foam, and a great many patents.</p>
+
+    <p>The Oslo studio started with a different question: what does the body actually want to do when it sits? The answer, observed across hundreds of hours of filming people in chairs, was: move. The body wants to shift, redistribute, lean, tuck, stretch. It does not want to be held in one optimized position.</p>
+
+    <blockquote>"The best ergonomic chair we ever studied was a three-legged milking stool. It forces constant micro-adjustment. The body stays alive in it. Most 'ergonomic' chairs are, functionally, the opposite of ergonomic."</blockquote>
+
+    <p>The chair they eventually produced looks, at first glance, simple to the point of severity: a curved wooden seat, four legs, a low back that offers suggestion rather than support. It is made from a single species of ash, from a single forest in Sweden, hand-finished by the same family that has been finishing furniture for four generations.</p>
+
+    <h2>What It Means</h2>
+    
+    <p>You can sit in it for hours. You do move — constantly, almost imperceptibly. You do not, at the end of those hours, feel the particular deadness that comes from having been held in one position by foam and mechanism.</p>
+
+    <p>It costs more than a thousand euros. It will last, barring catastrophe, for a century. These are not incidental facts. They are, the studio insists, the whole point.</p>`
+  },
+
+  'article-photo': {
+    category: 'Photography',
+    title: 'Capturing the Invisible: An Interview with Yuki Tanaka',
+    subtitle: 'The Japanese photographer who spent twelve months documenting only the space between things — and what she found there.',
+    author: 'Marco Bellini',
+    authorImg: 'https://i.pravatar.cc/40?img=60',
+    date: 'May 28, 2026',
+    readTime: '9 min read',
+    heroImg: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1600&q=85',
+    body: `<p class="drop-cap">Yuki Tanaka's new monograph contains almost nothing you would call a subject. There are no portraits. No landmarks. No decisive moments in the Cartier-Bresson sense. There are, instead, 200 images of what she calls "the space where something was, or almost happened, or could have."</p>
+
+    <p>The book — published in an edition of 500, already sold out — has generated an unusual kind of attention: the kind that comes from people who feel they have experienced something genuine and cannot fully explain it.</p>
+
+    <h2>On Finding the Project</h2>
+    
+    <p><strong>ÉDITION:</strong> How did the project begin?</p>
+    
+    <p><strong>Tanaka:</strong> I had been photographing cities for twelve years in a very conventional way — looking for beauty, for drama, for the things that make good pictures. Then one day I was in Osaka, very early, before any of the shops had opened, and I realized I was more interested in the closed shutters than I would have been in the open ones. More interested in the pause before the city became itself than in the city being itself. That was the beginning.</p>
+
+    <p><strong>ÉDITION:</strong> Did you know what you were looking for?</p>
+    
+    <p><strong>Tanaka:</strong> I knew what I wasn't looking for. I wasn't looking for the subject. I was looking for what surrounds the subject. The air around a figure. The ground between two buildings. The water after the boat has passed. Ma — the Japanese aesthetic of negative space — is something I grew up with, but I had never tried to make it the entire content of a photograph. I wanted to see if that was possible.</p>
+
+    <blockquote>"The camera is very good at making the invisible visible. Most photographers use this power to show you what was there. I became interested in using it to show you what was almost there."</blockquote>
+
+    <h2>On Time and Light</h2>
+
+    <p><strong>ÉDITION:</strong> Many of the photographs seem to be about a particular quality of light.</p>
+
+    <p><strong>Tanaka:</strong> Dawn. Almost all of them are dawn. Dawn is the only moment when cities forget to be cities. They have not yet started performing. The light is doing something extraordinary — neither night nor day, a third thing that has no name — and the city is simply there in it, not trying. That is the moment I am always looking for.</p>`
+  },
+
+  'article-food': {
+    category: 'Lifestyle',
+    title: 'The Table as Theatre: Fine Dining\'s New Dramaturgy',
+    subtitle: 'Why the world\'s most ambitious chefs are increasingly thinking like playwrights, choreographers, and composers.',
+    author: 'Sofia Reyes',
+    authorImg: 'https://i.pravatar.cc/40?img=44',
+    date: 'May 20, 2026',
+    readTime: '5 min read',
+    heroImg: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=85',
+    body: `<p class="drop-cap">The most interesting meal I ate last year lasted four hours and involved seventeen courses, two musical interludes, a poem read in the dark, and a final dessert that arrived in a box that contained, when opened, a scent I have not smelled since childhood and cannot account for.</p>
+
+    <p>I have been eating in serious restaurants for twenty years. I have never been so thoroughly attended to. And in the months since, I have thought a great deal about whether what I experienced was dinner, performance, ritual — or something that does not yet have a name.</p>
+
+    <h2>Beyond Gastronomy</h2>
+    
+    <p>The movement now reshaping the upper reaches of fine dining is not a culinary movement in the conventional sense. The chefs involved — from Copenhagen to Mexico City to rural Japan — are not primarily interested in new techniques or unusual ingredients. They are interested in experience as a totality: what you feel as you arrive, how the first taste changes after the third, what remains in memory when everything else has faded.</p>
+
+    <blockquote>"Food is the only art form you consume with your entire body. Every sense is engaged simultaneously. That is an extraordinary opportunity, and most restaurants waste it by thinking only about the plate."</blockquote>
+
+    <h2>The Choreography of Service</h2>
+    
+    <p>At these establishments, service is as carefully designed as the food. The timing of each course is calculated not merely for kitchen efficiency but for the arc of the guest's attention. There are slow moments and quick ones. There are silences. There are, occasionally, surprises that reset everything that has come before.</p>
+
+    <p>Whether this represents the apotheosis of fine dining or its decadent overreach depends entirely on what you believe dinner is for. If it is sustenance, it is ludicrous. If it is an occasion — one of the ceremonies by which we mark being alive and in company — it is extraordinary.</p>`
+  },
+
+  'article-wellness': {
+    category: 'Lifestyle',
+    title: 'The Art of Slowing Down in a World That Won\'t',
+    subtitle: 'Silence retreats, analog rituals, and the philosophers behind the movement redefining modern rest.',
+    author: 'Clara Dubois',
+    authorImg: 'https://i.pravatar.cc/40?img=5',
+    date: 'May 14, 2026',
+    readTime: '8 min read',
+    heroImg: 'https://images.unsplash.com/photo-1545389336-cf090694435e?w=1600&q=85',
+    body: `<p class="drop-cap">Rest has become, in our time, an act of resistance. To stop — genuinely stop, not merely switch one screen for another — is to push against the entire architecture of modern attention, which has been designed, with extraordinary skill and resources, to make stopping feel like loss.</p>
+
+    <p>And yet the movement toward deliberate, structured, intentional rest is one of the most significant cultural shifts of this decade. It is happening in alpine monasteries, urban apartments, and boardrooms; among the very young and the very experienced; in traditions as old as Zen and practices as new as last Tuesday.</p>
+
+    <h2>What Rest Actually Is</h2>
+    
+    <p>The research on rest — there is now a great deal of it — suggests that what the mind most needs, and least gets, is not sleep (though sleep is crucial) but a particular quality of unfocused attention. The state neuroscientists call "default mode" — in which the mind is not directed toward any specific task — is not idleness. It is, it turns out, when most of the brain's most important processing happens.</p>
+
+    <p>We have, quite systematically, engineered this state out of our lives. Every gap between tasks, every moment of potential boredom, has been filled — with content, with notification, with the endless low hum of connectivity.</p>
+
+    <blockquote>"The most radical thing most people could do for their mental health is to spend fifteen minutes each day with nothing to look at. Not meditation, not exercise, not a podcast about relaxation. Nothing. It is almost impossible. That is the point."</blockquote>
+
+    <h2>The New Retreats</h2>
+    
+    <p>A new kind of retreat has emerged to address this deficit — one that looks, from the outside, rather like doing nothing at all. No yoga. No workshops. No guided visualization. Days structured around meals, walks, and extended periods of unstructured time in which the only instruction is to leave your phone in the lockbox and be wherever you are.</p>
+
+    <p>Waiting lists for these experiences now run to eighteen months. The people on them are not, primarily, the burned-out or the broken. They are the functioning and the successful, who have noticed something missing in a life otherwise full — a quality of presence that used to come naturally and no longer does.</p>`
+  }
+};
+
+// HERO SLIDES
+const heroSlides = [
+  {
+    bg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=80',
+    category: 'Fashion',
+    title: 'The <em>New Language</em><br>of Luxury Dressing',
+    subtitle: 'How a generation of visionary designers is rewriting the rules of couture — and why silence has become the ultimate statement.',
+    article: 'article-fashion'
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1800&q=80',
+    category: 'Architecture',
+    title: 'Where <em>Concrete</em><br>Meets Sky',
+    subtitle: 'A journey through the studios of the architects reshaping how we inhabit the world.',
+    article: 'article-architecture'
+  },
+  {
+    bg: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1800&q=80',
+    category: 'Travel',
+    title: '<em>Kyoto</em> in Winter:<br>A City of Quiet Poetry',
+    subtitle: 'Off-season revelations in Japan\'s ancient capital, where the absence of tourists reveals the truest nature of place.',
+    article: 'article-travel'
+  }
+];
+
+let currentSlide = 0;
+let slideInterval;
+
+// ============================================
+// LOADER
+// ============================================
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    initReveal();
+    startHeroRotation();
+  }, 1400);
+});
+
+// ============================================
+// NAV SCROLL
+// ============================================
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+  updateReadingProgress();
+});
+
+function updateReadingProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  document.getElementById('readingProgress').style.width = progress + '%';
+}
+
+// ============================================
+// THEME
+// ============================================
+let isDark = false;
+
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  const icon = document.getElementById('themeIcon');
+  if (isDark) {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  } else {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  }
+  localStorage.setItem('edition-theme', isDark ? 'dark' : 'light');
+}
+
+// Restore theme
+(function() {
+  const saved = localStorage.getItem('edition-theme');
+  if (saved === 'dark') toggleTheme();
+})();
+
+// ============================================
+// SEARCH
+// ============================================
+function openSearch() {
+  document.getElementById('searchOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('searchInput').focus(), 100);
+}
+
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSearch();
+    closeMobileNav();
+  }
+});
+
+// ============================================
+// MOBILE NAV
+// ============================================
+function openMobileNav() {
+  document.getElementById('mobileNav').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ============================================
+// HERO ROTATION
+// ============================================
+function startHeroRotation() {
+  slideInterval = setInterval(() => {
+    currentSlide = (currentSlide + 1) % heroSlides.length;
+    updateHeroSlide();
+  }, 6000);
+}
+
+function setHeroSlide(index) {
+  clearInterval(slideInterval);
+  currentSlide = index;
+  updateHeroSlide();
+  startHeroRotation();
+}
+
+function updateHeroSlide() {
+  const slide = heroSlides[currentSlide];
+  const bg = document.getElementById('heroBg');
+  const title = document.getElementById('heroTitle');
+  const subtitle = document.getElementById('heroSubtitle');
+  const category = document.getElementById('heroCategory');
+  const dots = document.querySelectorAll('.hero-dot');
+
+  // Fade transition
+  bg.style.opacity = '0';
+  title.style.opacity = '0';
+  subtitle.style.opacity = '0';
+
+  setTimeout(() => {
+    bg.style.backgroundImage = `url('${slide.bg}')`;
+    title.innerHTML = slide.title;
+    subtitle.textContent = slide.subtitle;
+    category.textContent = slide.category;
+
+    bg.style.opacity = '1';
+    title.style.opacity = '1';
+    subtitle.style.opacity = '1';
+  }, 400);
+
+  bg.style.transition = 'opacity 0.6s ease';
+  title.style.transition = 'opacity 0.6s ease';
+  subtitle.style.transition = 'opacity 0.6s ease';
+
+  dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+
+  // Update CTA onclick
+  document.querySelector('.hero-actions .btn-primary').onclick = () => openArticle(slide.article);
+}
+
+// ============================================
+// ARTICLE NAVIGATION
+// ============================================
+function openArticle(id) {
+  const data = articles[id];
+  if (!data) return;
+
+  document.getElementById('homepage').style.display = 'none';
+  const container = document.getElementById('articleContainer');
+  container.classList.add('active');
+
+  document.getElementById('articleHeroImg').src = data.heroImg;
+  document.getElementById('articleCategory').textContent = data.category;
+  document.getElementById('articleTitle').textContent = data.title;
+  document.getElementById('articleSubtitle').textContent = data.subtitle;
+  document.getElementById('articleAuthorName').textContent = data.author;
+  document.getElementById('articleAuthorImg').src = data.authorImg;
+  document.getElementById('articleDate').textContent = data.date;
+  document.getElementById('articleReadTime').textContent = data.readTime;
+  document.getElementById('articleBody').innerHTML = data.body;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showHomepage() {
+  document.getElementById('homepage').style.display = '';
+  document.getElementById('articleContainer').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================
+// BOOKMARK
+// ============================================
+function toggleBookmark(btn) {
+  btn.classList.toggle('bookmarked');
+  const isBookmarked = btn.classList.contains('bookmarked');
+  showToast(isBookmarked ? 'Article saved to bookmarks' : 'Removed from bookmarks');
+}
+
+// ============================================
+// TOAST
+// ============================================
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMessage').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+// ============================================
+// NEWSLETTER
+// ============================================
+function subscribeNewsletter() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    showToast('Please enter a valid email address');
+    return;
+  }
+  showToast('Welcome to ÉDITION! Check your inbox.');
+  document.getElementById('emailInput').value = '';
+}
+
+// ============================================
+// SCROLL REVEAL
+// ============================================
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ============================================
+// SEARCH INPUT HANDLER
+// ============================================
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && this.value.trim()) {
+    showToast(`Searching for "${this.value.trim()}"…`);
+    closeSearch();
+  }
+});
+
+// ============================================
+// NEWSLETTER ENTER KEY
+// ============================================
+document.getElementById('emailInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') subscribeNewsletter();
+});
+</script>
+</body>
+</html>
